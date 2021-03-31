@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 
-_PATH = /Users/Jota/Sync/Jota/Acadêmico/Projetos/C_C++/Bibliotecas
+_PATH = /Users/Jota/Sync/Jota/Academico/Projetos/C_C++/Bibliotecas
 
 APPS 			= ./apps
 BIN 			= ./bin
@@ -24,30 +24,37 @@ dir:
 	mkdir $(OBJ) $(LIB) $(DYLIB) $(BIN)
 
 
-obj: $(OBJ)/$(NAME).o
+obj: $(OBJ)/rk4.o
 
 
-$(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
+$(OBJ)/%.o: $(SRC)/%.cpp $(INCLUDE)/%.h
 	$(CC) -c $< -I $(INCLUDE) -o $@
 
 
-lib:
-	ar -rcs $(LIB)/lib$(NAME).a $(OBJ)/*.o
+lib: $(LIB)/rk4.a
+
+
+$(LIB)/%.a: $(OBJ)/%.o
+	ar -rcs $(LIB)/librk4.a $(OBJ)/*.o
 
 
 static: obj lib
 
 
 dynamic:
-	$(CC) -dynamiclib $(SRC)/$(NAME).c -I $(INCLUDE) -o $(DYLIB)/lib$(NAME).dylib
+	$(CC) -dynamiclib $(SRC)/rk4.cpp -I $(INCLUDE) -o $(DYLIB)/librk4.dylib
 
 
-app: $(BIN)/teste_rk4
+app: $(BIN)/rk4-test
+
+
+$(BIN)/%: $(APPS)/%.cpp
+	$(CC) $< -lrk4 -ltempo -lgnuplot -L $(LIB) -L $(LIB_GLOBAL) -I $(INCLUDE) -I $(INCLUDE_GLOBAL) -o $@
 
 
 run:
-	$(BIN)/teste_rk4
+	$(BIN)/rk4-test
 
 
 clean:
-	rm $(OBJ)/* $(LIB)/* $(DYLIB)/* $(BIN)/*
+	rm -f $(OBJ)/* $(LIB)/* $(DYLIB)/* $(BIN)/*
