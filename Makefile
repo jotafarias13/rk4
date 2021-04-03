@@ -1,60 +1,75 @@
 # -*- Makefile -*-
 
-_PATH = /Users/Jota/Sync/Jota/Academico/Projetos/C_C++/Bibliotecas
 
-APPS 			= ./apps
-BIN 			= ./bin
-DYLIB			= ./dylib
-INCLUDE 		= ./include
-INCLUDE_GLOBAL 	= $(_PATH)/include
-LIB 			= ./lib
-LIB_GLOBAL 		= $(_PATH)/lib
-OBJ 			= ./obj
-SRC 			= ./src
-NAME			= rk4 
+NAME 	= rk4
 
-CC		= g++
-FLAGS		= -Wall
-LIBS		= -lrk4 -ltempo -lgnuplot -L $(LIB) -L $(LIB_GLOBAL)
-INCLUDES	= -I $(INCLUDE) -I $(INCLUDE_GLOBAL)
+INCLUDE = ./include
+SRC 	= ./src
+APPS 	= ./apps
+OBJ 	= ./obj
+LIB 	= ./lib
+DYLIB	= ./dylib
+BIN 	= ./bin
+OUTPUT	= ./output
+
+CC	= g++
 
 
 
-dir:
-	mkdir $(OBJ) $(LIB) $(DYLIB) $(BIN)
+.PHONY: obj lib static-app static dylib dynamic-app dynamic run-static run-dynamic clean install uninstall
 
 
-obj: $(OBJ)/rk4.o
+
+obj:
+	mkdir -p $(OBJ)
+	$(CC) -c $(SRC)/$(NAME).cpp -I $(INCLUDE) -o $(OBJ)/$(NAME).o
 
 
-$(OBJ)/%.o: $(SRC)/%.cpp $(INCLUDE)/%.h
-	$(CC) -c $< -I $(INCLUDE) -o $@
+lib:
+	mkdir -p $(LIB)
+	ar -rcs $(LIB)/lib$(NAME).a $(OBJ)/$(NAME).o
 
 
-lib: $(LIB)/rk4.a
+static-app:
+	mkdir -p $(BIN)
+	$(CC) $(APPS)/$(NAME)-test.cpp -l$(NAME) -L $(LIB) -I $(INCLUDE) -o $(BIN)/$(NAME)-test-static
+	# $(CC) $(APPS)/$(NAME)-test.cpp -l$(NAME) -L $(LIB) ${HOME}/.lib/libgnuplot.dylib -I $(INCLUDE) -I ${HOME}/.include -o $(BIN)/$(NAME)-test-static
 
 
-$(LIB)/%.a: $(OBJ)/%.o
-	ar -rcs $(LIB)/librk4.a $(OBJ)/*.o
+static: obj lib static-app
 
 
-static: obj lib
+dylib:
+	mkdir -p $(DYLIB)
+	$(CC) -dynamiclib $(SRC)/$(NAME).cpp -I $(INCLUDE) -o $(DYLIB)/lib$(NAME).dylib
 
 
-dynamic:
-	$(CC) -dynamiclib $(SRC)/rk4.cpp -I $(INCLUDE) -o $(DYLIB)/librk4.dylib
+dynamic-app:
+	mkdir -p $(BIN)
+	$(CC) $(APPS)/$(NAME)-test.cpp $(DYLIB)/lib$(NAME).dylib -I $(INCLUDE) -o $(BIN)/$(NAME)-test-dynamic
+	# $(CC) $(APPS)/$(NAME)-test.cpp $(DYLIB)/lib$(NAME).dylib ${HOME}/.lib/libgnuplot.dylib -I $(INCLUDE) -I ${HOME}/.include -o $(BIN)/$(NAME)-test-dynamic
 
 
-app: $(BIN)/rk4-test
+dynamic: dylib dynamic-app
 
 
-$(BIN)/%: $(APPS)/%.cpp
-	$(CC) $< -lrk4 -ltempo -lgnuplot -L $(LIB) -L $(LIB_GLOBAL) -I $(INCLUDE) -I $(INCLUDE_GLOBAL) -o $@
+run-static:
+	mkdir -p $(OUTPUT)
+	$(BIN)/$(NAME)-test-static
 
 
-run:
-	$(BIN)/rk4-test
+run-dynamic:
+	mkdir -p $(OUTPUT)
+	$(BIN)/$(NAME)-test-dynamic
 
 
 clean:
-	rm -f $(OBJ)/* $(LIB)/* $(DYLIB)/* $(BIN)/*
+	rm -f $(OBJ)/* $(BIN)/* $(LIB)/* $(DYLIB)/* $(OUTPUT)/*
+
+
+install:
+	./install.sh $(NAME)
+
+
+uninstall:
+	./uninstall.sh $(NAME)
