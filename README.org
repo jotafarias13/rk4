@@ -24,9 +24,7 @@ void rk4(eqSys_siso eqSystem, double* x, const double& u, const double& t, const
 
 A usage example is shown in the rk4-test.cpp, in which rk4 is used to iteratively solve the ODE for a damped simple pendulum, as described below.
 
-
-[[./latex_equation.png]]
-
+#+html: <p align="center"><img src="latex_equation.png" /></p>
 
 To check if the results are in agreement with a damped simple pendulum, use your favorite plot tool to plot the results and check for yourself! I suggest you use /[[http://www.gnuplot.info/][gnuplot]]/, it's the best one out there. Optionally, in the example, you can use the /[[https://github.com/gutofarias/gplot-cpp][gplot-cpp]]/ library to plot the results. In order to do that you'll have to install the library and uncomment the commented lines in the rk4-test.cpp file. Also, switch the /static-app/ and /dynamic-app/ make commands with the commented ones in the Makefile.
 
