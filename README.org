@@ -22,7 +22,7 @@ void rk4(eqSys_siso eqSystem, double* x, const double& u, const double& t, const
 
 #+end_src
 
-An usage example is shown in the rk4-test.cpp, in which rk4 is used to iteratively solve the ODE for a damped simple pendulum, as described below.
+A usage example is shown in the rk4-test.cpp, in which rk4 is used to iteratively solve the ODE for a damped simple pendulum, as described below.
 
 #+begin_src latex
 
@@ -46,7 +46,7 @@ g++ -c rk4.cpp -I rk4.h -o rk4.o
 
 #+end_src
 
-Now, if you want to use the header file with either a static or dynamic library, you'll have to create the library (the Makefile can do that for you) and then move it to your machine's library search path, that is, one of the directories it searches for libraries when compiling or executing a binary file. Alternatively, you can create a directory to save your "personal" libraries, that is, libraries that are not native to your computer or installed by others apps. Then, pass the full path of the library anytime you need to use it. Luckly, the Makefile can do just that for you.
+Now, if you want to use the header file with either a static or dynamic library, you'll have to create the library (the Makefile can do that for you) and then move it to your machine's library search path, that is, one of the directories it searches for libraries when compiling or executing a binary file. Alternatively, you can create a directory to save your "personal" libraries, that is, libraries that are neither native to your computer nor installed by others apps. Then, pass the full path of the library anytime you need to use it. Luckly, the Makefile can do just that for you.
 
 If you don't know the difference between static and dynamic libraries I suggest you search about them a little bit. But, in a nutshell, static libraries are compiled with the rest of the code when creating a binary, thus adding up to the size of the binary. Dynamic libraries, on the other hand, are only loaded after you execute the binary (at execution time, known as /dependent libraries/, or at runtime, known as /dinamically loaded libraries/), thus NOT increasing its size. To find out how to do all these things, checkout the Makefile section below!
 
