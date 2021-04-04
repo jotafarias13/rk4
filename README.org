@@ -26,5 +26,20 @@ In order to generate an object file and a static or dynamic library, you can use
 
 Note: if you're a Windows user, I suggest you either try the IDE Setup or search how to create object files and static or dynamic libraries on Windows in order to implement this setup. 
 
+** Library Usage
+After installing the library, just make sure to include the header and library files when compiling the binary for your app, or when creating new libraries that have rk4 as a dependency. Below you'll find how to include the header and library files when compiling binaries using static and dynamic libraries, respectively.
+
+#+begin_src shell
+
+g++ <app>.cpp -lrk4 -L <path-to-lib> -I <path-to-header> -o <binary-name>
+
+#+end_src
+
+#+begin_src shell
+
+g++ <app>.cpp <path-to-lib>/librk4.dylib -I <path-to-header> -o <binary-name>
+
+#+end_src
+
 * License
 This project is licensed under the [[file:LICENSE][GNU General Public License v3.0]].
