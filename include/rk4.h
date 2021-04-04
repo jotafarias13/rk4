@@ -1,44 +1,40 @@
 //
 //  rk4.h
-//  funcoes
 //
-//  Created by Jota Farias on 19/08/20.
-//  Copyright © 2020 Jota Farias. All rights reserved.
+//  Header file of the library 'rk4'
 //
+//  Created by João Lucas Correia Barbosa de Farias
+//  See https://github.com/jotafarias13/rk4
+//
+
 
 #ifndef rk4_h
 #define rk4_h
 
 
 
+// Defines a variable of type: pointer to a function that takes three pointers to double and one double value and returns void.
+// Note: the system function takes a pointer to the state array (x), a pointer to the derivative of the state array (xp), a pointer to the input array (u) and a time value (t).
+
+typedef void (*eqSys_mimo)(const double*, double*, const double*, const double&);
 
 
-// Define um variável tipo ponteiro que aponta para uma função que retorna void e tem como parâmetros 3 ponteiros double e um double escalar.
-// Obs: a função do sistema recebe como parâmetros o estado (x), a derivada dos estados (xp), o vetor de entradas (u) e o tempo (t)
-typedef void (*eqSis_mimo)(const double*, double*, const double*, const double&);
+// Defines a variable of type: pointer to a function that takes two pointers to double and two double values and returns void.
+// Note: the system function takes a pointer to the state array (x), a pointer to the derivative of the state array (xp), an input value (u) and a time value (t).
+
+typedef void (*eqSys_siso)(const double*, double*, const double&, const double&);
 
 
-// Define um variável tipo ponteiro que aponta para uma função que retorna void e tem como parâmetros 2 ponteiros double e 2 doubles escalar.
-// Obs: a função do sistema recebe como parâmetros o vetor de estados (x), o vetor da derivada dos estados (xp), a entrada (u) e o tempo (t)
-typedef void (*eqSis_siso)(const double*, double*, const double&, const double&);
+// Computes one integration loop of Runge-Kutta 4, updating the state array after the process. Suited for systems with multiple inputs and multiple outputs (MIMO).
+// Note: the function takes a pointer to a eqSys_mimo function (eqSystem), a pointer to the state array (x), a pointer to the input array (u), a time value (t), the integration step (dt) and the order of the system (order).
+
+void rk4(eqSys_mimo eqSystem, double* x, const double* u, const double& t, const double& dt, const int& order);
 
 
+// Computes one integration loop of Runge-Kutta 4, updating the state array after the process. Suited for systems with a single input and a single output (SISO).
+// Note: the function takes a pointer to a eqSys_siso function (eqSystem), a pointer to the state array (x), an input value (u), a time value (t), the integration step (dt) and the order of the system (order).
 
-
-
-// Calcula um loop de integração de Runge-Kutta 4, atualizando o vetor de estados (x) após a integração. Feita para sistemas com múltiplas entradas e múltiplas saídas (MIMO)
-// Obs: a função recebe como parâmetros um ponteiro para a função eqSistema, o vetor de estados (x), o vetor de entradas (u), o tempo (t), o passo de integração (dt) e a ordem dos sistema (ordem)
-void rk4(eqSis_mimo eqSistema, double* x, const double* u, const double& t, const double& dt, const int& ordem);
-
-
-
-
-
-// Calcula um loop de integração de Runge-Kutta 4, atualizando o vetor de estados (x) após a integração. Feita para sistemas com uma entrada e uma saída (SISO)
-// Obs: a função recebe como parâmetros um ponteiro para a função eqSistema, o vetor de estados (x), o vetor de entradas (u), o tempo (t), o passo de integração (dt) e a ordem dos sistema (ordem)
-void rk4(eqSis_siso eqSistema, double* x, const double& u, const double& t, const double& dt, const int& ordem);
-
-
+void rk4(eqSys_siso eqSystem, double* x, const double& u, const double& t, const double& dt, const int& order);
 
 
 

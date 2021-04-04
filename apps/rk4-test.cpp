@@ -3,6 +3,9 @@
 // 
 //  Test file for the library 'rk4'.
 //
+//  Created by João Lucas Correia Barbosa de Farias
+//  See https://github.com/jotafarias13/rk4
+//
 //  If the library 'gnuplot' is installed you can
 //  use it to plot the results of this program, just
 //  uncomment the commented lines.
