@@ -25,7 +25,7 @@ void rk4(eqSys_siso eqSystem, double* x, const double& u, const double& t, const
 A usage example is shown in the rk4-test.cpp, in which rk4 is used to iteratively solve the ODE for a damped simple pendulum, as described below.
 
 
-[<img src="https://latex.codecogs.com/gif.latex?\begin{equation*}&space;\ddot{\theta}&space;&plus;&space;b&space;\,&space;\dot{\theta}&space;&plus;&space;\frac{g}{l}&space;\,&space;\sin&space;\theta&space;=&space;0&space;\end{equation*}" title="\begin{equation*} \ddot{\theta} + b \, \dot{\theta} + \frac{g}{l} \, \sin \theta = 0 \end{equation*}" />]
+![equation](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bequation*%7D%20%5Cddot%7B%5Ctheta%7D%20&plus;%20b%20%5C%2C%20%5Cdot%7B%5Ctheta%7D%20&plus;%20%5Cfrac%7Bg%7D%7Bl%7D%20%5C%2C%20%5Csin%20%5Ctheta%20%3D%200%20%5Cend%7Bequation*%7D)
 
 
 To check if the results are in agreement with a damped simple pendulum, use your favorite plot tool to plot the results and check for yourself! I suggest you use /[[http://www.gnuplot.info/][gnuplot]]/, it's the best one out there. Optionally, in the example, you can use the /[[https://github.com/gutofarias/gplot-cpp][gplot-cpp]]/ library to plot the results. In order to do that you'll have to install the library and uncomment the commented lines in the rk4-test.cpp file. Also, switch the /static-app/ and /dynamic-app/ make commands with the commented ones in the Makefile.
