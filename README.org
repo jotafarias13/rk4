@@ -1,9 +1,38 @@
 * rk4
 A library for solving ODE's using Runge-Kutta 4 in C++!
 
-rk4 is a library written in C++ to help users solve ODE's using Runge-Kutta 4 method within their C++ code. The goal of rk4 is to update a given state array with the new values for the states calculated by the library. For that, the user only needs to define a function which contains the ODE's. More information below!
+rk4 is a library written in C++ to help users solve ODE's using Runge-Kutta 4 method within their C++ code. The goal of rk4 is to update a given state array with the new values for the states calculated by the library. For that, the user only needs to define a function which contains the ODE's (for an ODE of order 'n', you need to convert it to 'n' equations of order 1). More information below!
 
 * Usage
+Currently, there are two functions that can be used: one for multiple input/multiple output (MIMO) systems and one for single input/single output (SISO) systems. 
+
+The first one, for MIMO systems, computes one integration loop of Runge-Kutta 4, updating the state array after the process. It takes a pointer to a eqSys_mimo function (eqSystem), a pointer to the state array (x), a pointer to the input array (u), a time value (t), the integration step (dt) and the order of the system (order).
+
+#+begin_src C++
+
+void rk4(eqSys_mimo eqSystem, double* x, const double* u, const double& t, const double& dt, const int& order); 
+
+#+end_src
+
+The second one, for SISO systems, computes one integration loop of Runge-Kutta 4, updating the state array after the process. It takes a pointer to a eqSys_siso function (eqSystem), a pointer to the state array (x), an input value (u), a time value (t), the integration step (dt) and the order of the system (order).
+
+#+begin_src C++
+
+void rk4(eqSys_siso eqSystem, double* x, const double& u, const double& t, const double& dt, const int& order);
+
+#+end_src
+
+An usage example is shown in the rk4-test.cpp, in which rk4 is used to iteratively solve the ODE for a damped simple pendulum, as described below.
+
+#+begin_src latex
+
+\ddot{\theta} + b \dot{\theta} + \frac{g}{l} \sin \theta = 0
+
+#+end_src
+
+To check if the results are in agreement with a damped simple pendulum, use your favorite plot tool to plot the results and check for yourself! I suggest you use /[[http://www.gnuplot.info/][gnuplot]]/, it's the best one out there. Optionally, in the example, you can use the /[[https://github.com/gutofarias/gplot-cpp][gplot-cpp]]/ library to plot the results. In order to do that you'll have to install the library and uncomment the commented lines in the rk4-test.cpp file. Also, switch the /static-app/ and /dynamic-app/ make commands with the commented ones in the Makefile.
+
+Below there is information about setting up the library in your IDE or manually (in your shell). Have fun!
 
 * IDE Setup
 As there are many IDE's out there to code in C++, I'll just suggest that you search how to create a library in your favorite IDE (you'll need both rk4.h and rk4.cpp files for that). After that, just link the created library to your project and you're good to go!
