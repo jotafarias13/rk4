@@ -14,7 +14,7 @@
 
 
 // Defines a variable of type: pointer to a function that takes three pointers to double and one double value and returns void.
-// Note: the system function takes a pointer to the state array (x), a pointer to the derivative of the state array (xp), a pointer to the input array (u) and a time value (t).
+// Note: the system function takes a pointer to the state array (x), a pointer to the derivative of the state array (xp), a pointer to the input array (u) and a time value (t).i
 
 typedef void (*eqSys_mimo)(const double*, double*, const double*, const double&);
 
